@@ -14,11 +14,9 @@ export class GGLeapAuth {
 
   async getJWT(): Promise<string> {
     const now = Date.now();
-    
     if (!this.jwt || !this.jwtExpiry || now > this.jwtExpiry - this.REFRESH_THRESHOLD) {
       await this.refreshJWT();
     }
-    
     return this.jwt!;
   }
 
@@ -46,7 +44,6 @@ export class GGLeapAuth {
     options: RequestInit = {}
   ): Promise<T> {
     const jwt = await this.getJWT();
-    
     const response = await fetch(`${this.baseUrl}${endpoint}`, {
       ...options,
       headers: {
